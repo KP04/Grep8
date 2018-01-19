@@ -7,6 +7,7 @@ public class PlannerForSlide {
 	Vector plan;
 	ArrayList<String> process = new ArrayList<String>();
 	int stepCount = 0;
+	String clearPoint;
 
 	public static void main(String argv[]) {
 		(new PlannerForSlide()).start();
@@ -80,7 +81,7 @@ public class PlannerForSlide {
 					 Vector theCurrentState,
 					 Hashtable theBinding,
 					 Operator nextOperator,
-					 boolean isFirstStep) 
+					 boolean isFirstStep)
 	{
 		System.out.println("*** GOALS ***" + theGoalList);
 		System.out.println("*** STATE ***" + theCurrentState);
