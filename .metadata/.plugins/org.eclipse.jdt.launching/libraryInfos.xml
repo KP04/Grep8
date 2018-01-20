@@ -19,4 +19,42 @@
 <entry path="/usr/java/jdk1.7.0_45/jre/lib/endorsed"/>
 </endorsedDirs>
 </libraryInfo>
+<libraryInfo home="C:\pleiades\eclipse" version="1.7.0_15">
+<bootpath>
+<entry path="C:\pleiades\eclipse\jre\lib\resources.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\rt.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\sunrsasign.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jsse.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jce.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\charsets.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jfr.jar"/>
+<entry path="C:\pleiades\eclipse\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\pleiades\eclipse\jre\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\pleiades\eclipse\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="C:\pleiades\eclipse\jre" version="1.7.0_15">
+<bootpath>
+<entry path="C:\pleiades\eclipse\jre\lib\resources.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\rt.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\sunrsasign.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jsse.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jce.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\charsets.jar"/>
+<entry path="C:\pleiades\eclipse\jre\lib\jfr.jar"/>
+<entry path="C:\pleiades\eclipse\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\pleiades\eclipse\jre\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\pleiades\eclipse\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
 </libraryInfos>
