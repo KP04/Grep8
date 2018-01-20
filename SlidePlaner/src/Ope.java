@@ -16,7 +16,7 @@ public class Ope {
 		Vector initialState = initInitialState();
 		Hashtable theBinding = new Hashtable();
 		Planner.plan = new Vector();
-		Planner.planning(goalList, initialState, theBinding);
+		Planner.planning(goalList, initialState, theBinding, false);
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < Planner.plan.size(); i++) {
 			Operator op = (Operator) Planner.plan.elementAt(i);
@@ -24,10 +24,12 @@ public class Ope {
 		}
 	}
 
+	// "clear -"を確認してから次のオペレータを探さないと、好き勝手動き回れてしまい、だめ
+	
 	private void initOperators() {
 		Planner.operators = new Vector();
 		Vector operators = Planner.operators;
-		
+
 		// OPERATOR 1 (スタートからゴールするまでの全ての手順をリストに格納)
 		// / NAME
 		String name1 = new String("Start");
@@ -42,7 +44,7 @@ public class Ope {
 		deleteList1.addElement(new String("Start"));
 		Operator operator1 = new Operator(name1, ifList1, addList1, deleteList1);
 		operators.addElement(operator1);
-		
+
 		// OPERATOR 2 (１の終了条件)
 		// / NAME
 		String name2 = new String("Clear move 1");
@@ -59,7 +61,7 @@ public class Ope {
 //		deleteList2.addElement(new String("move 1"));
 		Operator operator2 = new Operator(name2, ifList2, addList2, deleteList2);
 		operators.addElement(operator2);
-		
+
 		/*
 		// OPERATOR 3 (２と３の隣接)
 		// / NAME
@@ -78,7 +80,7 @@ public class Ope {
 		Operator operator3 = new Operator(name3, ifList3, addList3, deleteList3);
 		operators.addElement(operator3);
 		*/
-		
+
 		// OPERATOR 3 (1行目の完成)
 		// / NAME
 		String name3 = new String("Clear make first line");
@@ -95,7 +97,7 @@ public class Ope {
 //		deleteList4.addElement(new String("make first line"));
 		Operator operator3 = new Operator(name3, ifList3, addList3, deleteList3);
 		operators.addElement(operator3);
-		
+
 		/*
 		// OPERATOR 5 (4と7の隣接)
 		// / NAME
@@ -114,7 +116,7 @@ public class Ope {
 		Operator operator5 = new Operator(name5, ifList5, addList5, deleteList5);
 		operators.addElement(operator5);
 		*/
-		
+
 		// OPERATOR 4 (1列目の完成)
 		// / NAME
 		String name4 = new String("Clear make first column");
@@ -130,7 +132,7 @@ public class Ope {
 //		deleteList6.addElement(new String("make first column"));
 		Operator operator4 = new Operator(name4, ifList4, addList4, deleteList4);
 		operators.addElement(operator4);
-		
+
 		// OPERATOR 5 (2行目の完成)
 		// / NAME
 		String name5 = new String("Clear make second line");
@@ -146,7 +148,7 @@ public class Ope {
 //		deleteList7.addElement(new String("make second line"));
 		Operator operator5 = new Operator(name5, ifList5, addList5, deleteList5);
 		operators.addElement(operator5);
-		
+
 		// OPERATOR 6 (3列目の完成)
 		// / NAME
 		String name6 = new String("Clear make third line");
@@ -162,7 +164,7 @@ public class Ope {
 //		deleteList8.addElement(new String("make third line"));
 		Operator operator6 = new Operator(name6, ifList6, addList6, deleteList6);
 		operators.addElement(operator6);
-		
+
 		// OPERATOR 51 (move1)
 		// / NAME
 		String name51 = new String("move 1-2");
@@ -198,7 +200,7 @@ public class Ope {
 		deleteList52.addElement(new String("( 0 , 1 ) is clear"));
 		Operator operator52 = new Operator(name52, ifList52, addList52, deleteList52);
 		operators.addElement(operator52);
-		
+
 		// OPERATOR 53 (move3)
 		// / NAME
 		String name53 = new String("move 2-1");
@@ -216,7 +218,7 @@ public class Ope {
 		deleteList53.addElement(new String("( 0 , 0 ) is clear"));
 		Operator operator53 = new Operator(name53, ifList53, addList53, deleteList53);
 		operators.addElement(operator53);
-		
+
 		// OPERATOR 54 (move4)
 		// / NAME
 		String name54 = new String("move 2-5");
@@ -234,7 +236,7 @@ public class Ope {
 		deleteList54.addElement(new String("( 1 , 1 ) is clear"));
 		Operator operator54 = new Operator(name54, ifList54, addList54, deleteList54);
 		operators.addElement(operator54);
-		
+
 		// OPERATOR 55 (move5)
 		// / NAME
 		String name55 = new String("move 2-3");
@@ -252,7 +254,7 @@ public class Ope {
 		deleteList55.addElement(new String("( 2 , 0 ) is clear"));
 		Operator operator55 = new Operator(name55, ifList55, addList55, deleteList55);
 		operators.addElement(operator55);
-		
+
 		// OPERATOR 56 (move6)
 		// / NAME
 		String name56 = new String("move 3-2");
@@ -270,7 +272,7 @@ public class Ope {
 		deleteList56.addElement(new String("( 1 , 0 ) is clear"));
 		Operator operator56 = new Operator(name56, ifList56, addList56, deleteList56);
 		operators.addElement(operator56);
-		
+
 		// OPERATOR 57 (move7)
 		// / NAME
 		String name57 = new String("move 3-6");
@@ -306,7 +308,7 @@ public class Ope {
 		deleteList58.addElement(new String("( 0 , 0 ) is clear"));
 		Operator operator58 = new Operator(name58, ifList58, addList58, deleteList58);
 		operators.addElement(operator58);
-		
+
 		// OPERATOR 59 (move9)
 		// / NAME
 		String name59 = new String("move 4-5");
@@ -378,7 +380,7 @@ public class Ope {
 		deleteList62.addElement(new String("( 1 , 2 ) is clear"));
 		Operator operator62 = new Operator(name62, ifList62, addList62, deleteList62);
 		operators.addElement(operator62);
-		
+
 		// OPERATOR 63 (move13)
 		// / NAME
 		String name63 = new String("move 5-6");
@@ -605,14 +607,25 @@ public class Ope {
 		goalList.addElement(new String("make first column"));
 		goalList.addElement(new String("make second line"));
 		goalList.addElement(new String("make third line"));
-		
+
 		return goalList;
 	}
 
 	private Vector initInitialState() {
 		Vector initialState = new Vector();
 		initialState.addElement("Start");
-		
+
+		initialState.addElement("1 at ( 1 , 0 )");//(0,0)
+		initialState.addElement("2 at ( 2 , 0 )");//(1,0)
+		initialState.addElement("3 at ( 2 , 1 )");//(2,0)
+		initialState.addElement("4 at ( 0 , 2 )");//(0,1)
+		initialState.addElement("5 at ( 0 , 1 )");//(1,1)
+		initialState.addElement("6 at ( 1 , 1 )");//(2,1)
+		initialState.addElement("7 at ( 1 , 2 )");//(0,2)
+		initialState.addElement("8 at ( 2 , 2 )");//(1,2)
+		initialState.addElement("( 0 , 0 ) is clear");//(2,2)
+
+		/*
 		initialState.addElement("1 at ( 0 , 0 )");//(0,0)
 		initialState.addElement("2 at ( 1 , 0 )");//(1,0)
 		initialState.addElement("3 at ( 2 , 0 )");//(2,0)
@@ -622,7 +635,8 @@ public class Ope {
 		initialState.addElement("7 at ( 1 , 2 )");//(0,2)
 		initialState.addElement("8 at ( 2 , 2 )");//(1,2)
 		initialState.addElement("( 0 , 1 ) is clear");//(2,2)
-		
+		*/
+
 		return initialState;
 	}
 }
