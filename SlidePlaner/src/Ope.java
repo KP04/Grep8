@@ -37,12 +37,6 @@ public class Ope {
 		// / ADD-LIST
 		Vector addList1 = new Vector();
 		addList1.addElement(new String("move 1"));
-//		addList1.addElement(new String("adjacent 2 and 3"));
-//		addList1.addElement(new String("make first line"));
-//		addList1.addElement(new String("adjacent 4 and 7"));
-//		addList1.addElement(new String("make first column"));
-//		addList1.addElement(new String("make second line"));
-//		addList1.addElement(new String("make third line"));
 		// / DELETE-LIST
 		Vector deleteList1 = new Vector();
 		deleteList1.addElement(new String("Start"));
@@ -55,53 +49,35 @@ public class Ope {
 		// / IF
 		Vector ifList2 = new Vector();
 		ifList2.addElement(new String("1 at ( 0 , 0 )"));
-		ifList2.addElement(new String("Start"));
+		ifList2.addElement(new String("move 1"));
 		// / ADD-LIST
 		Vector addList2 = new Vector();
-		addList2.addElement(new String("adjacent 2 and 3"));
+//		addList2.addElement(new String("adjacent 2 and 3"));
+		addList2.addElement(new String("make first line"));
 		// / DELETE-LIST
 		Vector deleteList2 = new Vector();
-		deleteList2.addElement(new String("move 1"));
+//		deleteList2.addElement(new String("move 1"));
 		Operator operator2 = new Operator(name2, ifList2, addList2, deleteList2);
 		operators.addElement(operator2);
 		
 		/*
-		// OPERATOR (１を右上に持って行く過程)
-		// / NAME
-		String name = new String("move 1");
-		// / IF
-		Vector ifList = new Vector();
-		ifList.addElement(new String("1 at ( x , y )"));
-		ifList.addElement(new String("( x-1 , y ) is clear"));//or (x,y-1)
-		ifList.addElement(new String("move 1"));
-		// / ADD-LIST
-		Vector addList = new Vector();
-		addList.addElement(new String("1 at ( x-1 , y )"));//or (x,y-1)
-		addList.addElement(new String("( x , y ) is clear"));
-		// / DELETE-LIST
-		Vector deleteList = new Vector();
-		deleteList.addElement(new String("1 at ( x , y )"));
-		deleteList.addElement(new String("( x-1 , y ) is clear"));//or (x,y-1)
-		Operator operator = new Operator(name, ifList, addList, deleteList);
-		operators.addElement(operator);
-		*/
-		
 		// OPERATOR 3 (２と３の隣接)
 		// / NAME
 		String name3 = new String("Clear adjacent 2 and 3");
 		// / IF
 		Vector ifList3 = new Vector();
 		ifList3.addElement(new String("2 at ( 1 , 0 )"));
-		ifList3.addElement(new String("3 at ( 2 , 0 )"));//or (x,y+1)
+		ifList3.addElement(new String("3 at ( 2 , 0 )"));
 		ifList3.addElement(new String("adjacent 2 and 3"));
 		// / ADD-LIST
 		Vector addList3 = new Vector();
 		addList3.addElement(new String("make first line"));
 		// / DELETE-LIST
 		Vector deleteList3 = new Vector();
-		deleteList3.addElement(new String("adjacent 2 and 3"));
+//		deleteList3.addElement(new String("adjacent 2 and 3"));
 		Operator operator3 = new Operator(name3, ifList3, addList3, deleteList3);
 		operators.addElement(operator3);
+		*/
 		
 		// OPERATOR 4 (1行目の完成)
 		// / NAME
@@ -113,13 +89,15 @@ public class Ope {
 		ifList4.addElement(new String("make first line"));
 		// / ADD-LIST
 		Vector addList4 = new Vector();
-		addList4.addElement(new String("adjacent 4 and 7"));
+//		addList4.addElement(new String("adjacent 4 and 7"));
+		addList4.addElement(new String("make first column"));
 		// / DELETE-LIST
 		Vector deleteList4 = new Vector();
-		deleteList4.addElement(new String("make first line"));
+//		deleteList4.addElement(new String("make first line"));
 		Operator operator4 = new Operator(name4, ifList4, addList4, deleteList4);
 		operators.addElement(operator4);
 		
+		/*
 		// OPERATOR 5 (4と7の隣接)
 		// / NAME
 		String name5 = new String("Clear adjacent 4 and 7");
@@ -133,9 +111,10 @@ public class Ope {
 		addList5.addElement(new String("make first column"));
 		// / DELETE-LIST
 		Vector deleteList5 = new Vector();
-		deleteList5.addElement(new String("adjacent 4 and 7"));
+//		deleteList5.addElement(new String("adjacent 4 and 7"));
 		Operator operator5 = new Operator(name5, ifList5, addList5, deleteList5);
 		operators.addElement(operator5);
+		*/
 		
 		// OPERATOR 6 (1列目の完成)
 		// / NAME
@@ -150,7 +129,7 @@ public class Ope {
 		addList6.addElement(new String("make second line"));
 		// / DELETE-LIST
 		Vector deleteList6 = new Vector();
-		deleteList6.addElement(new String("make first column"));
+//		deleteList6.addElement(new String("make first column"));
 		Operator operator6 = new Operator(name6, ifList6, addList6, deleteList6);
 		operators.addElement(operator6);
 		
@@ -167,11 +146,11 @@ public class Ope {
 		addList7.addElement(new String("make third line"));
 		// / DELETE-LIST
 		Vector deleteList7 = new Vector();
-		deleteList7.addElement(new String("make second line"));
+//		deleteList7.addElement(new String("make second line"));
 		Operator operator7 = new Operator(name7, ifList7, addList7, deleteList7);
 		operators.addElement(operator7);
 		
-		// OPERATOR 8 (1列目の完成)
+		// OPERATOR 8 (3列目の完成)
 		// / NAME
 		String name8 = new String("Clear make third line");
 		// / IF
@@ -184,13 +163,13 @@ public class Ope {
 		addList8.addElement(new String("Goal"));
 		// / DELETE-LIST
 		Vector deleteList8 = new Vector();
-		deleteList8.addElement(new String("make third line"));
+//		deleteList8.addElement(new String("make third line"));
 		Operator operator8 = new Operator(name8, ifList8, addList8, deleteList8);
 		operators.addElement(operator8);
 		
 		// OPERATOR 51 (move1)
 		// / NAME
-		String name51 = new String("move 1-1");
+		String name51 = new String("move 1-2");
 		// / IF
 		Vector ifList51 = new Vector();
 		ifList51.addElement(new String("?x at ( 0 , 0 )"));
@@ -208,7 +187,7 @@ public class Ope {
 
 		// OPERATOR 52 (move2)
 		// / NAME
-		String name52 = new String("move 1-2");
+		String name52 = new String("move 1-4");
 		// / IF
 		Vector ifList52 = new Vector();
 		ifList52.addElement(new String("?x at ( 0 , 0 )"));
@@ -244,7 +223,7 @@ public class Ope {
 		
 		// OPERATOR 54 (move4)
 		// / NAME
-		String name54 = new String("move 2-2");
+		String name54 = new String("move 2-5");
 		// / IF
 		Vector ifList54 = new Vector();
 		ifList54.addElement(new String("?x at ( 1 , 0 )"));
@@ -280,7 +259,7 @@ public class Ope {
 		
 		// OPERATOR 56 (move6)
 		// / NAME
-		String name56 = new String("move 3-1");
+		String name56 = new String("move 3-2");
 		// / IF
 		Vector ifList56 = new Vector();
 		ifList56.addElement(new String("?x at ( 2 , 0 )"));
@@ -298,15 +277,15 @@ public class Ope {
 		
 		// OPERATOR 57 (move7)
 		// / NAME
-		String name57 = new String("move 3-2");
+		String name57 = new String("move 3-6");
 		// / IF
 		Vector ifList57 = new Vector();
 		ifList57.addElement(new String("?x at ( 2 , 0 )"));
 		ifList57.addElement(new String("( 2 , 1 ) is clear"));
 		// / ADD-LIST
 		Vector addList57 = new Vector();
-		addList57.addElement(new String("?x at ( 2 , 0 )"));
-		addList57.addElement(new String("( 2 , 1 ) is clear"));
+		addList57.addElement(new String("?x at ( 2 , 1 )"));
+		addList57.addElement(new String("( 2 , 0 ) is clear"));
 		// / DELETE-LIST
 		Vector deleteList57 = new Vector();
 		deleteList57.addElement(new String("?x at ( 2 , 0 )"));
@@ -334,7 +313,7 @@ public class Ope {
 		
 		// OPERATOR 59 (move9)
 		// / NAME
-		String name59 = new String("move 4-2");
+		String name59 = new String("move 4-5");
 		// / IF
 		Vector ifList59 = new Vector();
 		ifList59.addElement(new String("?x at ( 0 , 1 )"));
@@ -352,7 +331,7 @@ public class Ope {
 
 		// OPERATOR 60 (move10)
 		// / NAME
-		String name60 = new String("move 4-3");
+		String name60 = new String("move 4-7");
 		// / IF
 		Vector ifList60 = new Vector();
 		ifList60.addElement(new String("?x at ( 0 , 1 )"));
@@ -370,7 +349,7 @@ public class Ope {
 
 		// OPERATOR 61 (move11)
 		// / NAME
-		String name61 = new String("move 5-1");
+		String name61 = new String("move 5-4");
 		// / IF
 		Vector ifList61 = new Vector();
 		ifList61.addElement(new String("?x at ( 1 , 1 )"));
@@ -388,7 +367,7 @@ public class Ope {
 
 		// OPERATOR 62 (move12)
 		// / NAME
-		String name62 = new String("move 5-2");
+		String name62 = new String("move 5-8");
 		// / IF
 		Vector ifList62 = new Vector();
 		ifList62.addElement(new String("?x at ( 1 , 1 )"));
@@ -406,7 +385,7 @@ public class Ope {
 		
 		// OPERATOR 63 (move13)
 		// / NAME
-		String name63 = new String("move 5-3");
+		String name63 = new String("move 5-6");
 		// / IF
 		Vector ifList63 = new Vector();
 		ifList63.addElement(new String("?x at ( 1 , 1 )"));
@@ -424,7 +403,7 @@ public class Ope {
 
 		// OPERATOR 64 (move14)
 		// / NAME
-		String name64 = new String("move 5-4");
+		String name64 = new String("move 5-2");
 		// / IF
 		Vector ifList64 = new Vector();
 		ifList64.addElement(new String("?x at ( 1 , 1 )"));
@@ -442,7 +421,7 @@ public class Ope {
 
 		// OPERATOR 65 (move15)
 		// / NAME
-		String name65 = new String("move 6-1");
+		String name65 = new String("move 6-3");
 		// / IF
 		Vector ifList65 = new Vector();
 		ifList65.addElement(new String("?x at ( 2 , 1 )"));
@@ -460,7 +439,7 @@ public class Ope {
 
 		// OPERATOR 66 (move16)
 		// / NAME
-		String name66 = new String("move 6-2");
+		String name66 = new String("move 6-5");
 		// / IF
 		Vector ifList66 = new Vector();
 		ifList66.addElement(new String("?x at ( 2 , 1 )"));
@@ -478,7 +457,7 @@ public class Ope {
 
 		// OPERATOR 67 (move17)
 		// / NAME
-		String name67 = new String("move 6-3");
+		String name67 = new String("move 6-9");
 		// / IF
 		Vector ifList67 = new Vector();
 		ifList67.addElement(new String("?x at ( 2 , 1 )"));
@@ -496,7 +475,7 @@ public class Ope {
 
 		// OPERATOR 68 (move18)
 		// / NAME
-		String name68 = new String("move 7-1");
+		String name68 = new String("move 7-4");
 		// / IF
 		Vector ifList68 = new Vector();
 		ifList68.addElement(new String("?x at ( 0 , 2 )"));
@@ -514,7 +493,7 @@ public class Ope {
 
 		// OPERATOR 69 (move19)
 		// / NAME
-		String name69 = new String("move 7-2");
+		String name69 = new String("move 7-8");
 		// / IF
 		Vector ifList69 = new Vector();
 		ifList69.addElement(new String("?x at ( 0 , 2 )"));
@@ -532,7 +511,7 @@ public class Ope {
 
 		// OPERATOR 70 (move20)
 		// / NAME
-		String name70 = new String("move 8-1");
+		String name70 = new String("move 8-7");
 		// / IF
 		Vector ifList70 = new Vector();
 		ifList70.addElement(new String("?x at ( 1 , 2 )"));
@@ -550,7 +529,7 @@ public class Ope {
 
 		// OPERATOR 71 (move21)
 		// / NAME
-		String name71 = new String("move 8-2");
+		String name71 = new String("move 8-5");
 		// / IF
 		Vector ifList71 = new Vector();
 		ifList71.addElement(new String("?x at ( 1 , 2 )"));
@@ -568,7 +547,7 @@ public class Ope {
 
 		// OPERATOR 72 (move22)
 		// / NAME
-		String name72 = new String("move 8-3");
+		String name72 = new String("move 8-9");
 		// / IF
 		Vector ifList72 = new Vector();
 		ifList72.addElement(new String("?x at ( 1 , 2 )"));
@@ -586,7 +565,7 @@ public class Ope {
 
 		// OPERATOR 73 (move23)
 		// / NAME
-		String name73 = new String("move 9-1");
+		String name73 = new String("move 9-6");
 		// / IF
 		Vector ifList73 = new Vector();
 		ifList73.addElement(new String("?x at ( 2 , 2 )"));
@@ -604,7 +583,7 @@ public class Ope {
 
 		// OPERATOR 74 (move24)
 		// / NAME
-		String name74 = new String("move 9-1");
+		String name74 = new String("move 9-8");
 		// / IF
 		Vector ifList74 = new Vector();
 		ifList74.addElement(new String("?x at ( 2 , 2 )"));
@@ -620,7 +599,6 @@ public class Ope {
 		Operator operator74 = new Operator(name74, ifList74, addList74, deleteList74);
 		operators.addElement(operator74);
 
-
 	}
 
 	private Vector initGoalList() {
@@ -635,7 +613,13 @@ public class Ope {
 //		goalList.addElement("7 at ( 0 , 2 )");
 //		goalList.addElement("8 at ( 1 , 2 )");
 //		goalList.addElement("( 2 , 2 ) is clear");
-		
+		goalList.addElement("move 1");
+//		goalList.addElement(new String("adjacent 2 and 3"));
+		goalList.addElement(new String("make first line"));
+//		goalList.addElement(new String("adjacent 4 and 7"));
+		goalList.addElement(new String("make first column"));
+		goalList.addElement(new String("make second line"));
+		goalList.addElement(new String("make third line"));
 		goalList.addElement("Goal"); 
 		return goalList;
 	}
@@ -651,8 +635,8 @@ public class Ope {
 		initialState.addElement("5 at ( 1 , 1 )");
 		initialState.addElement("6 at ( 2 , 1 )");
 		initialState.addElement("7 at ( 0 , 2 )");
-		initialState.addElement("8 at ( 1 , 2 )");
-		initialState.addElement("( 2 , 2 ) is clear");
+		initialState.addElement("8 at ( 2 , 2 )");
+		initialState.addElement("( 1 , 2 ) is clear");
 		
 		return initialState;
 	}
