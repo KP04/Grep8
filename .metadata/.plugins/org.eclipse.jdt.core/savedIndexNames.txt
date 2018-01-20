@@ -4,7 +4,6 @@ INDEX VERSION 1.126+C:\Users\remu\Documents\github\Grep8\.metadata\.plugins\org.
 3271193799.index
 3954313852.index
 2807173081.index
-570300380.index
 1299474863.index
 4074768670.index
 2331626044.index

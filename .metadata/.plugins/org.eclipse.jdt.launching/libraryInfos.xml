@@ -19,7 +19,7 @@
 <entry path="/usr/java/jdk1.7.0_45/jre/lib/endorsed"/>
 </endorsedDirs>
 </libraryInfo>
-<libraryInfo home="C:\pleiades\eclipse" version="1.7.0_15">
+<libraryInfo home="C:\pleiades\eclipse\jre" version="1.7.0_15">
 <bootpath>
 <entry path="C:\pleiades\eclipse\jre\lib\resources.jar"/>
 <entry path="C:\pleiades\eclipse\jre\lib\rt.jar"/>
@@ -38,7 +38,7 @@
 <entry path="C:\pleiades\eclipse\jre\lib\endorsed"/>
 </endorsedDirs>
 </libraryInfo>
-<libraryInfo home="C:\pleiades\eclipse\jre" version="1.7.0_15">
+<libraryInfo home="C:\pleiades\eclipse" version="1.7.0_15">
 <bootpath>
 <entry path="C:\pleiades\eclipse\jre\lib\resources.jar"/>
 <entry path="C:\pleiades\eclipse\jre\lib\rt.jar"/>
