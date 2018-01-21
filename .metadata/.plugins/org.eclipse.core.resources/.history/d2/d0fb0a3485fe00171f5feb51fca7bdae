@@ -31,18 +31,6 @@ public class Planner {
 
 	boolean planning(Vector theGoalList, Vector theCurrentState,
 			Hashtable theBinding, Vector objects, boolean flag, Vector table) {
-		
-		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		int totalStep = 0;
-		
-		Vector theGoalList, theCurrentState, objects;
-		Hashtable theBinding;
-		
-		stepMemory memory = memorys.get(totalStep);
-		
-		boolean flag = memory.isFirstStep();
-		
-		
 		if(theGoalList.size() == 0){
 			return true;
 		}
@@ -945,7 +933,8 @@ class stepMemory{
 			Vector currentState, 
 			Hashtable binding, 
 			Vector objects, 
-			boolean flag)
+			boolean flag, 
+			Operator operator)
 	{
 		_stepCount = stepCount;
 		_nextIndex = -1;
@@ -954,7 +943,7 @@ class stepMemory{
 		_binding = binding;
 		_objects = objects;
 		_flag = flag;
-		_operator = null;
+		_operator = operator;
 	}
 	
 	public int getStepCount(){

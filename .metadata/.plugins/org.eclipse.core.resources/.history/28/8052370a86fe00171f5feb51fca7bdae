@@ -31,18 +31,6 @@ public class Planner {
 
 	boolean planning(Vector theGoalList, Vector theCurrentState,
 			Hashtable theBinding, Vector objects, boolean flag, Vector table) {
-		
-		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		int totalStep = 0;
-		
-		Vector theGoalList, theCurrentState, objects;
-		Hashtable theBinding;
-		
-		stepMemory memory = memorys.get(totalStep);
-		
-		boolean flag = memory.isFirstStep();
-		
-		
 		if(theGoalList.size() == 0){
 			return true;
 		}

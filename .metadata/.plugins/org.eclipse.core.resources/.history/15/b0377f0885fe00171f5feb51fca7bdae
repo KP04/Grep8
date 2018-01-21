@@ -31,18 +31,6 @@ public class Planner {
 
 	boolean planning(Vector theGoalList, Vector theCurrentState,
 			Hashtable theBinding, Vector objects, boolean flag, Vector table) {
-		
-		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		int totalStep = 0;
-		
-		Vector theGoalList, theCurrentState, objects;
-		Hashtable theBinding;
-		
-		stepMemory memory = memorys.get(totalStep);
-		
-		boolean flag = memory.isFirstStep();
-		
-		
 		if(theGoalList.size() == 0){
 			return true;
 		}
@@ -911,7 +899,6 @@ class Unifier {
 class stepMemory{
 	
 	int _stepCount;
-	int _nextIndex;
 	Vector _goalList; 
 	Vector _currentState;
 	Hashtable _binding; 
@@ -921,7 +908,6 @@ class stepMemory{
 	
 	public stepMemory(
 			int stepCount, 
-			int nextIndex,
 			Vector goalList, 
 			Vector currentState, 
 			Hashtable binding, 
@@ -930,7 +916,6 @@ class stepMemory{
 			Operator operator)
 	{
 		_stepCount = stepCount;
-		_nextIndex = nextIndex;
 		_goalList = goalList;
 		_currentState = currentState;
 		_binding = binding;
@@ -939,44 +924,13 @@ class stepMemory{
 		_operator = operator;
 	}
 	
-	public stepMemory(
-			int stepCount, 
-			Vector goalList, 
-			Vector currentState, 
-			Hashtable binding, 
-			Vector objects, 
-			boolean flag)
-	{
-		_stepCount = stepCount;
-		_nextIndex = -1;
-		_goalList = goalList;
-		_currentState = currentState;
-		_binding = binding;
-		_objects = objects;
-		_flag = flag;
-		_operator = null;
-	}
-	
 	public int getStepCount(){
 		return _stepCount;
-	}
-	
-	public int getNextIndex(){
-		return _nextIndex;
 	}
 	
 	public boolean isFirstStep(){
 		return _flag;
 	}
 	
-	public Operator getOperator(){
-		return _operator;
-	}
-	
-	public void setMemory(Vector goalList, Vector currentState, Hashtable binding, Vector objects){
-		goalList = _goalList;
-		currentState = _currentState;
-		binding = _binding;
-		objects = _objects;
-	}
+	public void setMemory(Vector goalList, Vector currentState, Hashtable binding, Vector objects, )
 }

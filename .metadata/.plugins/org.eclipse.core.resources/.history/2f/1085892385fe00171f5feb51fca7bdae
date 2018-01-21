@@ -21,7 +21,7 @@ public class Ope {
 		Vector table = new Vector();
 		Planner.plan = new Vector();
 		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		memorys.add(new stepMemory(0, goalList, initialState, theBinding, objects, false));
+		memorys.add(new stepMemory(0, goalList, initialState, theBinding, objects, false, null));
 		Planner.planning(goalList, initialState, theBinding, objects, false, table);
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < Planner.plan.size(); i++) {

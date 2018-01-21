@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -20,8 +19,6 @@ public class Ope {
 		Hashtable theBinding = new Hashtable();
 		Vector table = new Vector();
 		Planner.plan = new Vector();
-		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		memorys.add(new stepMemory(0, goalList, initialState, theBinding, objects, false));
 		Planner.planning(goalList, initialState, theBinding, objects, false, table);
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < Planner.plan.size(); i++) {

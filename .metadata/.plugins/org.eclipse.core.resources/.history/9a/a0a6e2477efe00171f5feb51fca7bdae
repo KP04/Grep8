@@ -20,7 +20,7 @@ public class Planner {
 
 		Hashtable theBinding = new Hashtable();
 		plan = new Vector();
-		planning(goalList, initialState, theBinding, null, false, null);
+		planning(goalList, initialState, theBinding, null, false);
 
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < plan.size(); i++) {
@@ -30,19 +30,7 @@ public class Planner {
 	}
 
 	boolean planning(Vector theGoalList, Vector theCurrentState,
-			Hashtable theBinding, Vector objects, boolean flag, Vector table) {
-		
-		ArrayList<stepMemory> memorys = new ArrayList<stepMemory>();
-		int totalStep = 0;
-		
-		Vector theGoalList, theCurrentState, objects;
-		Hashtable theBinding;
-		
-		stepMemory memory = memorys.get(totalStep);
-		
-		boolean flag = memory.isFirstStep();
-		
-		
+			Hashtable theBinding, Vector objects, boolean flag) {
 		if(theGoalList.size() == 0){
 			return true;
 		}
@@ -50,7 +38,7 @@ public class Planner {
 		if (theGoalList.size() == 1) {
 			String aGoal = (String) theGoalList.elementAt(0);
 			if (planningAGoal(aGoal, theGoalList, theCurrentState, theBinding,
-					objects, 0, flag, table) != -1) {
+					objects, 0, flag) != -1) {
 				return true;
 			} else {
 				return false;
@@ -73,7 +61,7 @@ public class Planner {
 				}
 
 				int tmpPoint = planningAGoal(aGoal, theGoalList,
-						theCurrentState, theBinding, objects, cPoint, flag, table);
+						theCurrentState, theBinding, objects, cPoint, flag);
 				// System.out.println("tmpPoint: "+tmpPoint);
 				if (tmpPoint != -1) {
 					String str = (String) theGoalList.elementAt(0);
@@ -211,7 +199,7 @@ public class Planner {
 					}
 					System.out.println(theCurrentState);
 					if (planning(theGoalList, theCurrentState, theBinding,
-							objects, flag, table)) {
+							objects, flag)) {
 						// System.out.println("Success !");
 						return true;
 					} else {
@@ -251,7 +239,7 @@ public class Planner {
 
 	private int planningAGoal(String theGoal, Vector theGoalList,
 			Vector theCurrentState, Hashtable theBinding, Vector objects,
-			int cPoint, boolean flag, Vector table) {
+			int cPoint, boolean flag) {
 		System.out.println("**" + theGoal);
 		int size = theCurrentState.size();
 		for (int j = 0; j < theGoalList.size() && flag; ++j){
@@ -270,7 +258,6 @@ public class Planner {
 		int randInt = Math.abs(rand.nextInt()) % operators.size(); Operator
 		op = (Operator)operators.elementAt(randInt);
 		operators.removeElementAt(randInt); operators.add(0, op);
-		table.add(randInt);
 
 		for (int i = cPoint; i < operators.size(); i++) {
 			Operator anOperator = rename((Operator) operators.elementAt(i));
@@ -325,7 +312,7 @@ public class Planner {
 						objects.remove(targetObj);
 						objects.add(targetObj);
 						int result = unifyObject(targetObj, objects, add, i,
-								anOperator, theBinding, str, theCurrentState, table);
+								anOperator, theBinding, str, theCurrentState);
 
 						if (result != -1) {
 							return result;
@@ -384,15 +371,11 @@ public class Planner {
 
 				System.out.println(newOperator.name);
 				if (planning(newGoals, theCurrentState, theBinding, objects,
-						true, table)) {
+						true)) {
 					System.out.println(newOperator.name);
 					plan.addElement(newOperator);
-					Vector temp = newOperator.applyState(theCurrentState);
-					if (temp != null) {
-						theCurrentState = temp;
-						return i + 1;
-					}
-					return -1;
+					theCurrentState = newOperator.applyState(theCurrentState);
+					return i + 1;
 				} else {
 					// 失敗したら元に戻す．
 					theBinding.clear();
@@ -418,7 +401,7 @@ public class Planner {
 
 	private int unifyObject(String object, Vector objects, String goal, int i,
 			Operator anOperator, Hashtable theBinding, String str,
-			Vector theCurrentState, Vector table) {
+			Vector theCurrentState) {
 
 		if (!(new Unifier()).bind(object, goal, theBinding)) {
 			return -1;
@@ -454,7 +437,7 @@ public class Planner {
 		}
 
 		System.out.println(newOperator.name);
-		if (planning(newGoals, theCurrentState, theBinding, objects, true, table)) {
+		if (planning(newGoals, theCurrentState, theBinding, objects, true)) {
 			System.out.println(newOperator.name);
 			plan.addElement(newOperator);
 			Vector temp = newOperator.applyState(theCurrentState);
@@ -906,77 +889,5 @@ class Unifier {
 		// 先頭が ? なら変数
 		return str1.startsWith("?");
 	}
-}
 
-class stepMemory{
-	
-	int _stepCount;
-	int _nextIndex;
-	Vector _goalList; 
-	Vector _currentState;
-	Hashtable _binding; 
-	Vector _objects; 
-	boolean _flag;
-	Operator _operator;
-	
-	public stepMemory(
-			int stepCount, 
-			int nextIndex,
-			Vector goalList, 
-			Vector currentState, 
-			Hashtable binding, 
-			Vector objects, 
-			boolean flag, 
-			Operator operator)
-	{
-		_stepCount = stepCount;
-		_nextIndex = nextIndex;
-		_goalList = goalList;
-		_currentState = currentState;
-		_binding = binding;
-		_objects = objects;
-		_flag = flag;
-		_operator = operator;
-	}
-	
-	public stepMemory(
-			int stepCount, 
-			Vector goalList, 
-			Vector currentState, 
-			Hashtable binding, 
-			Vector objects, 
-			boolean flag)
-	{
-		_stepCount = stepCount;
-		_nextIndex = -1;
-		_goalList = goalList;
-		_currentState = currentState;
-		_binding = binding;
-		_objects = objects;
-		_flag = flag;
-		_operator = null;
-	}
-	
-	public int getStepCount(){
-		return _stepCount;
-	}
-	
-	public int getNextIndex(){
-		return _nextIndex;
-	}
-	
-	public boolean isFirstStep(){
-		return _flag;
-	}
-	
-	public Operator getOperator(){
-		return _operator;
-	}
-	
-	public void setMemory(Vector goalList, Vector currentState, Hashtable binding, Vector objects){
-		goalList = _goalList;
-		currentState = _currentState;
-		binding = _binding;
-		objects = _objects;
-	}
 }
