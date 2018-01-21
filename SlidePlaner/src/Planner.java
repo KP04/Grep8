@@ -20,7 +20,7 @@ public class Planner {
 
 		Hashtable theBinding = new Hashtable();
 		plan = new Vector();
-		planning(goalList, initialState, theBinding, false);
+		planning(goalList, initialState, theBinding, null, false);
 
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < plan.size(); i++) {
@@ -30,12 +30,15 @@ public class Planner {
 	}
 
 	boolean planning(Vector theGoalList, Vector theCurrentState,
-			Hashtable theBinding, boolean flag) {
+			Hashtable theBinding, Vector objects, boolean flag) {
+		if(theGoalList.size() == 0){
+			return true;
+		}
 		System.out.println("*** GOALS ***" + theGoalList);
 		if (theGoalList.size() == 1) {
 			String aGoal = (String) theGoalList.elementAt(0);
 			if (planningAGoal(aGoal, theGoalList, theCurrentState, theBinding,
-					0, flag) != -1) {
+					objects, 0, flag) != -1) {
 				return true;
 			} else {
 				return false;
@@ -58,7 +61,7 @@ public class Planner {
 				}
 
 				int tmpPoint = planningAGoal(aGoal, theGoalList,
-						theCurrentState, theBinding, cPoint, flag);
+						theCurrentState, theBinding, objects, cPoint, flag);
 				// System.out.println("tmpPoint: "+tmpPoint);
 				if (tmpPoint != -1) {
 					String str = (String) theGoalList.elementAt(0);
@@ -67,6 +70,7 @@ public class Planner {
 
 					// 配置が完了した場所の固定をする
 					if (str.equals("move 1")) {
+						objects.remove("1");
 						for (int i = 0; i < operators.size(); i++) {
 							Operator op = (Operator) operators.elementAt(i);
 							if (op.name.equals("move 1-2")) {
@@ -91,6 +95,8 @@ public class Planner {
 							System.out.println(((Operator) operators
 									.elementAt(i)).name + "a");
 					} else if (str.equals("make first line")) {
+						objects.remove("2");
+						objects.remove("3");
 						for (int i = 0; i < operators.size(); i++) {
 							Operator op = (Operator) operators.elementAt(i);
 							if (op.name.equals("move 2-5")) {
@@ -123,6 +129,8 @@ public class Planner {
 							System.out.println(((Operator) operators
 									.elementAt(i)).name + "b");
 					} else if (str.equals("make first column")) {
+						objects.remove("4");
+						objects.remove("7");
 						for (int i = 0; i < operators.size(); i++) {
 							Operator op = (Operator) operators.elementAt(i);
 							if (op.name.equals("move 4-5")) {
@@ -155,6 +163,8 @@ public class Planner {
 							System.out.println(((Operator) operators
 									.elementAt(i)).name + "c");
 					} else if (str.equals("make second line")) {
+						objects.remove("5");
+						objects.remove("6");
 						for (int i = 0; i < operators.size(); i++) {
 							Operator op = (Operator) operators.elementAt(i);
 							if (op.name.equals("move 5-8")) {
@@ -188,7 +198,8 @@ public class Planner {
 									.elementAt(i)).name + "d");
 					}
 					System.out.println(theCurrentState);
-					if (planning(theGoalList, theCurrentState, theBinding, flag)) {
+					if (planning(theGoalList, theCurrentState, theBinding,
+							objects, flag)) {
 						// System.out.println("Success !");
 						return true;
 					} else {
@@ -227,14 +238,20 @@ public class Planner {
 	}
 
 	private int planningAGoal(String theGoal, Vector theGoalList,
-			Vector theCurrentState, Hashtable theBinding, int cPoint,
-			boolean flag) {
+			Vector theCurrentState, Hashtable theBinding, Vector objects,
+			int cPoint, boolean flag) {
 		System.out.println("**" + theGoal);
 		int size = theCurrentState.size();
-		for (int i = 0; i < size; i++) {
-			String aState = (String) theCurrentState.elementAt(i);
-			if ((new Unifier()).unify(theGoal, aState, theBinding)) {
-				return 0;
+		for (int j = 0; j < theGoalList.size() && flag; ++j){
+			for (int i = 0; i < size; i++) {
+				String aState = (String) theCurrentState.elementAt(i);
+				if ((new Unifier()).unify((String)theGoalList.get(j), aState, theBinding)) {
+					if(j != 0){
+						theGoalList.remove(aState);
+						return 0;
+					}
+					break;
+				}
 			}
 		}
 		/*
@@ -265,54 +282,97 @@ public class Planner {
 				orgPlan.addElement(plan.elementAt(j));
 			}
 
+			// オブジェクトを元にオペレータを決定すると、あり得ない処理になりやすい
+			// →　空からやって、deleteList適応時に状態を確認しながら更新
+			// →　operatorにおける追加順序をclear優先にしたい
+
+			// ゴール状態にはないオブジェクトの参照(および変数束縛)が必要
+			// →　オブジェクトリストを作成し、ゴール状態にあるものは後ろに、使用しないものは消去を逐次行う
+			// →　addListの２番目を参照して、ゴール状態のオブジェクトを取得
+
+			// 現状、バックトラックはobjectsの削除で考えてない
+			// →　復元できるようにしておく必要はある
+
 			Vector addList = (Vector) anOperator.getAddList();
+			int a = 0;
 			// for (int j = 0, addIndex = 0; j < addList.size(); j++) {
+			if (addList.size() == 2
+					&& ((String) addList.get(0)).indexOf("clear") != -1 && flag)
+				a = 1;
 			if (addList.size() != 0
 					&& (new Unifier()).unify(theGoal,
-							(String) addList.elementAt(0), theBinding)) {
+							(String) addList.elementAt(a), theBinding)) {
+				if (addList.size() == 2) {
+					String add = (String) addList.get(1);
+					StringTokenizer tokens = new StringTokenizer(add);
+					String obj = tokens.nextToken();
+					Vector newObjects = new Vector(objects);
+
+					for (int index = 0; index < newObjects.size() - 1; ++index) {
+						String targetObj = (String) newObjects.get(index);
+						objects.remove(targetObj);
+						objects.add(targetObj);
+						int result = unifyObject(targetObj, objects, add, i,
+								anOperator, theBinding, str, theCurrentState);
+
+						if (result != -1) {
+							return result;
+						}
+
+						theBinding.clear();
+						for (Enumeration e = orgBinding.keys(); e
+								.hasMoreElements();) {
+							String key = (String) e.nextElement();
+							String value = (String) orgBinding.get(key);
+							theBinding.put(key, value);
+						}
+						theCurrentState.removeAllElements();
+						for (int k = 0; k < orgState.size(); k++) {
+							theCurrentState.addElement(orgState.elementAt(k));
+						}
+						plan.removeAllElements();
+						for (int k = 0; k < orgPlan.size(); k++) {
+							plan.addElement(orgPlan.elementAt(k));
+						}
+					}
+					
+					continue;
+				}
+
 				Operator newOperator = anOperator.instantiate(theBinding);
 				Vector newGoals = (Vector) newOperator.getIfList();
 
-				boolean clear = false;
-				String goal = "";
-				for (int j = 0; j < theGoalList.size(); ++j) {
-					goal = (String) theGoalList.get(j);
-					if (goal.indexOf("clear") != -1) {
-						clear = true;
-						break;
-					}
-				}
-
-				if (clear) {
-					if (flag && theGoalList.size() > 1) {
-						// その時点でaddList内の状態がゴール状態に全てあるかチェック
-						String clearAdd = (String) addList.get(1);
-						if (clearAdd.indexOf("clear") != -1
-								&& !goal.equals(clearAdd)) {
-							return -1;
-						}
-					}
-				}
-				/*else if (flag && theGoalList.size() > 1) {
-					// ゴール状態に不正な"clear -"が入るのを防ぐ
-					String clearAdd = (String)addList.get(1);
-					if(!theCurrentState.contains(clearAdd))
-						return -1;
-				}
-				*/
+				/*
+				 * boolean clear = false; String goal = ""; for (int j = 0; j <
+				 * theGoalList.size(); ++j) { goal = (String)
+				 * theGoalList.get(j); if (goal.indexOf("clear") != -1) { clear
+				 * = true; break; } }
+				 * 
+				 * if (clear) { if (flag && theGoalList.size() > 1) { //
+				 * その時点でaddList内の状態がゴール状態に全てあるかチェック String clearAdd = (String)
+				 * addList.get(1); if (clearAdd.indexOf("clear") != -1 &&
+				 * !goal.equals(clearAdd)) { return -1; } } }
+				 */
+				/*
+				 * else if (flag && theGoalList.size() > 1) { //
+				 * ゴール状態に不正な"clear -"が入るのを防ぐ String clearAdd =
+				 * (String)addList.get(1);
+				 * if(!theCurrentState.contains(clearAdd)) return -1; }
+				 */
 
 				// 確定したのち、優先度変更
 				for (int k = 0; k < operators.size(); k++) {
 					Operator ope = (Operator) operators.elementAt(k);
 					if (ope.name.equals(str)) {
-						operators.removeElementAt(i);
+						operators.removeElementAt(k);
 						operators.addElement(ope);
 						break;
 					}
 				}
 
 				System.out.println(newOperator.name);
-				if (planning(newGoals, theCurrentState, theBinding, true)) {
+				if (planning(newGoals, theCurrentState, theBinding, objects,
+						true)) {
 					System.out.println(newOperator.name);
 					plan.addElement(newOperator);
 					theCurrentState = newOperator.applyState(theCurrentState);
@@ -337,6 +397,57 @@ public class Planner {
 			}
 			// }
 		}
+		return -1;
+	}
+
+	private int unifyObject(String object, Vector objects, String goal, int i,
+			Operator anOperator, Hashtable theBinding, String str,
+			Vector theCurrentState) {
+
+		if (!(new Unifier()).bind(object, goal, theBinding)) {
+			return -1;
+		}
+
+		Operator newOperator = anOperator.instantiate(theBinding);
+		Vector newGoals = (Vector) newOperator.getIfList();
+
+		/*
+		 * boolean clear = false; String goal = ""; for (int j = 0; j <
+		 * theGoalList.size(); ++j) { goal = (String) theGoalList.get(j); if
+		 * (goal.indexOf("clear") != -1) { clear = true; break; } }
+		 * 
+		 * if (clear) { if (flag && theGoalList.size() > 1) { //
+		 * その時点でaddList内の状態がゴール状態に全てあるかチェック String clearAdd = (String)
+		 * addList.get(1); if (clearAdd.indexOf("clear") != -1 &&
+		 * !goal.equals(clearAdd)) { return -1; } } }
+		 */
+		/*
+		 * else if (flag && theGoalList.size() > 1) { //
+		 * ゴール状態に不正な"clear -"が入るのを防ぐ String clearAdd = (String)addList.get(1);
+		 * if(!theCurrentState.contains(clearAdd)) return -1; }
+		 */
+
+		// 確定したのち、優先度変更
+		for (int k = 0; k < operators.size(); k++) {
+			Operator ope = (Operator) operators.elementAt(k);
+			if (ope.name.equals(str)) {
+				operators.removeElementAt(i);
+				operators.addElement(ope);
+				break;
+			}
+		}
+
+		System.out.println(newOperator.name);
+		if (planning(newGoals, theCurrentState, theBinding, objects, true)) {
+			System.out.println(newOperator.name);
+			plan.addElement(newOperator);
+			Vector temp = newOperator.applyState(theCurrentState);
+			if (temp != null) {
+				theCurrentState = temp;
+				return i + 1;
+			}
+		}
+
 		return -1;
 	}
 
@@ -498,7 +609,12 @@ class Operator {
 			theState.addElement(addList.elementAt(i));
 		}
 		for (int i = 0; i < deleteList.size(); i++) {
-			theState.removeElement(deleteList.elementAt(i));
+			String delete = (String) deleteList.get(i);
+			if (theState.contains(delete)) {
+				theState.removeElement(deleteList.elementAt(i));
+			} else {
+				return null;
+			}
 		}
 		return theState;
 	}
@@ -756,6 +872,18 @@ class Unifier {
 				vars.put(key, postString);
 			}
 		}
+	}
+
+	boolean bind(String value, String goal, Hashtable theBinding) {
+		StringTokenizer tokens = new StringTokenizer(goal);
+		while (tokens.hasMoreTokens()) {
+			String token = tokens.nextToken();
+			if (var(token)) {
+				String newGoal = goal.replace(token, value);
+				return unify(goal, newGoal, theBinding);
+			}
+		}
+		return false;
 	}
 
 	boolean var(String str1) {

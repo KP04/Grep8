@@ -1,4 +1,5 @@
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,12 +12,13 @@ public class Ope {
 	}
 
 	public void start() {
+		Vector objects = new Vector();
 		initOperators();
 		Vector goalList = initGoalList();
-		Vector initialState = initInitialState();
+		Vector initialState = initInitialState(objects);
 		Hashtable theBinding = new Hashtable();
 		Planner.plan = new Vector();
-		Planner.planning(goalList, initialState, theBinding, false);
+		Planner.planning(goalList, initialState, theBinding, objects, false);
 		System.out.println("***** This is a plan! *****");
 		for (int i = 0; i < Planner.plan.size(); i++) {
 			Operator op = (Operator) Planner.plan.elementAt(i);
@@ -154,8 +156,8 @@ public class Ope {
 		String name6 = new String("Clear make third line");
 		// / IF
 		Vector ifList6 = new Vector();
-		ifList6.addElement(new String("8 at ( 1 , 2 )"));
 		ifList6.addElement(new String("( 2 , 2 ) is clear"));
+		ifList6.addElement(new String("8 at ( 1 , 2 )"));
 		// / ADD-LIST
 		Vector addList6 = new Vector();
 		addList6.addElement(new String("make third line"));
@@ -170,12 +172,12 @@ public class Ope {
 		String name51 = new String("move 1-2");
 		// / IF
 		Vector ifList51 = new Vector();
-		ifList51.addElement(new String("?x at ( 0 , 0 )"));
 		ifList51.addElement(new String("( 1 , 0 ) is clear"));
+		ifList51.addElement(new String("?x at ( 0 , 0 )"));
 		// / ADD-LIST
 		Vector addList51 = new Vector();
-		addList51.addElement(new String("?x at ( 1 , 0 )"));
 		addList51.addElement(new String("( 0 , 0 ) is clear"));
+		addList51.addElement(new String("?x at ( 1 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList51 = new Vector();
 		deleteList51.addElement(new String("?x at ( 0 , 0 )"));
@@ -188,12 +190,12 @@ public class Ope {
 		String name52 = new String("move 1-4");
 		// / IF
 		Vector ifList52 = new Vector();
-		ifList52.addElement(new String("?x at ( 0 , 0 )"));
 		ifList52.addElement(new String("( 0 , 1 ) is clear"));
+		ifList52.addElement(new String("?x at ( 0 , 0 )"));
 		// / ADD-LIST
 		Vector addList52 = new Vector();
-		addList52.addElement(new String("?x at ( 0 , 1 )"));
 		addList52.addElement(new String("( 0 , 0 ) is clear"));
+		addList52.addElement(new String("?x at ( 0 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList52 = new Vector();
 		deleteList52.addElement(new String("?x at ( 0 , 0 )"));
@@ -206,12 +208,12 @@ public class Ope {
 		String name53 = new String("move 2-1");
 		// / IF
 		Vector ifList53 = new Vector();
-		ifList53.addElement(new String("?x at ( 1 , 0 )"));
 		ifList53.addElement(new String("( 0 , 0 ) is clear"));
+		ifList53.addElement(new String("?x at ( 1 , 0 )"));
 		// / ADD-LIST
 		Vector addList53 = new Vector();
-		addList53.addElement(new String("?x at ( 0 , 0 )"));
 		addList53.addElement(new String("( 1 , 0 ) is clear"));
+		addList53.addElement(new String("?x at ( 0 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList53 = new Vector();
 		deleteList53.addElement(new String("?x at ( 1 , 0 )"));
@@ -224,12 +226,12 @@ public class Ope {
 		String name54 = new String("move 2-5");
 		// / IF
 		Vector ifList54 = new Vector();
-		ifList54.addElement(new String("?x at ( 1 , 0 )"));
 		ifList54.addElement(new String("( 1 , 1 ) is clear"));
+		ifList54.addElement(new String("?x at ( 1 , 0 )"));
 		// / ADD-LIST
 		Vector addList54 = new Vector();
-		addList54.addElement(new String("?x at ( 1 , 1 )"));
 		addList54.addElement(new String("( 1 , 0 ) is clear"));
+		addList54.addElement(new String("?x at ( 1 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList54 = new Vector();
 		deleteList54.addElement(new String("?x at ( 1 , 0 )"));
@@ -242,12 +244,12 @@ public class Ope {
 		String name55 = new String("move 2-3");
 		// / IF
 		Vector ifList55 = new Vector();
-		ifList55.addElement(new String("?x at ( 1 , 0 )"));
 		ifList55.addElement(new String("( 2 , 0 ) is clear"));
+		ifList55.addElement(new String("?x at ( 1 , 0 )"));
 		// / ADD-LIST
 		Vector addList55 = new Vector();
-		addList55.addElement(new String("?x at ( 2 , 0 )"));
 		addList55.addElement(new String("( 1 , 0 ) is clear"));
+		addList55.addElement(new String("?x at ( 2 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList55 = new Vector();
 		deleteList55.addElement(new String("?x at ( 1 , 0 )"));
@@ -260,12 +262,12 @@ public class Ope {
 		String name56 = new String("move 3-2");
 		// / IF
 		Vector ifList56 = new Vector();
-		ifList56.addElement(new String("?x at ( 2 , 0 )"));
 		ifList56.addElement(new String("( 1 , 0 ) is clear"));
+		ifList56.addElement(new String("?x at ( 2 , 0 )"));
 		// / ADD-LIST
 		Vector addList56 = new Vector();
-		addList56.addElement(new String("?x at ( 1 , 0 )"));
 		addList56.addElement(new String("( 2 , 0 ) is clear"));
+		addList56.addElement(new String("?x at ( 1 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList56 = new Vector();
 		deleteList56.addElement(new String("?x at ( 2 , 0 )"));
@@ -278,12 +280,12 @@ public class Ope {
 		String name57 = new String("move 3-6");
 		// / IF
 		Vector ifList57 = new Vector();
-		ifList57.addElement(new String("?x at ( 2 , 0 )"));
 		ifList57.addElement(new String("( 2 , 1 ) is clear"));
+		ifList57.addElement(new String("?x at ( 2 , 0 )"));
 		// / ADD-LIST
 		Vector addList57 = new Vector();
-		addList57.addElement(new String("?x at ( 2 , 1 )"));
 		addList57.addElement(new String("( 2 , 0 ) is clear"));
+		addList57.addElement(new String("?x at ( 2 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList57 = new Vector();
 		deleteList57.addElement(new String("?x at ( 2 , 0 )"));
@@ -296,12 +298,12 @@ public class Ope {
 		String name58 = new String("move 4-1");
 		// / IF
 		Vector ifList58 = new Vector();
-		ifList58.addElement(new String("?x at ( 0 , 1 )"));
 		ifList58.addElement(new String("( 0 , 0 ) is clear"));
+		ifList58.addElement(new String("?x at ( 0 , 1 )"));
 		// / ADD-LIST
 		Vector addList58 = new Vector();
-		addList58.addElement(new String("?x at ( 0 , 0 )"));
 		addList58.addElement(new String("( 0 , 1 ) is clear"));
+		addList58.addElement(new String("?x at ( 0 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList58 = new Vector();
 		deleteList58.addElement(new String("?x at ( 0 , 1 )"));
@@ -314,12 +316,12 @@ public class Ope {
 		String name59 = new String("move 4-5");
 		// / IF
 		Vector ifList59 = new Vector();
-		ifList59.addElement(new String("?x at ( 0 , 1 )"));
 		ifList59.addElement(new String("( 1 , 1 ) is clear"));
+		ifList59.addElement(new String("?x at ( 0 , 1 )"));
 		// / ADD-LIST
 		Vector addList59 = new Vector();
-		addList59.addElement(new String("?x at ( 1 , 1 )"));
 		addList59.addElement(new String("( 0 , 1 ) is clear"));
+		addList59.addElement(new String("?x at ( 1 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList59 = new Vector();
 		deleteList59.addElement(new String("?x at ( 0 , 1 )"));
@@ -332,12 +334,12 @@ public class Ope {
 		String name60 = new String("move 4-7");
 		// / IF
 		Vector ifList60 = new Vector();
-		ifList60.addElement(new String("?x at ( 0 , 1 )"));
 		ifList60.addElement(new String("( 0 , 2 ) is clear"));
+		ifList60.addElement(new String("?x at ( 0 , 1 )"));
 		// / ADD-LIST
 		Vector addList60 = new Vector();
-		addList60.addElement(new String("?x at ( 0 , 2 )"));
 		addList60.addElement(new String("( 0 , 1 ) is clear"));
+		addList60.addElement(new String("?x at ( 0 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList60 = new Vector();
 		deleteList60.addElement(new String("?x at ( 0 , 1 )"));
@@ -350,16 +352,16 @@ public class Ope {
 		String name61 = new String("move 5-4");
 		// / IF
 		Vector ifList61 = new Vector();
-		ifList61.addElement(new String("?x at ( 1 , 1 )"));
 		ifList61.addElement(new String("( 0 , 1 ) is clear"));
+		ifList61.addElement(new String("?x at ( 1 , 1 )"));
 		// / ADD-LIST
 		Vector addList61 = new Vector();
-		addList61.addElement(new String("?x at ( 0 , 1 )"));
 		addList61.addElement(new String("( 1 , 1 ) is clear"));
+		addList61.addElement(new String("?x at ( 0 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList61 = new Vector();
-		deleteList61.addElement(new String("?x at ( 1 , 1 )"));
 		deleteList61.addElement(new String("( 0 , 1 ) is clear"));
+		deleteList61.addElement(new String("?x at ( 1 , 1 )"));
 		Operator operator61 = new Operator(name61, ifList61, addList61, deleteList61);
 		operators.addElement(operator61);
 
@@ -368,12 +370,12 @@ public class Ope {
 		String name62 = new String("move 5-8");
 		// / IF
 		Vector ifList62 = new Vector();
-		ifList62.addElement(new String("?x at ( 1 , 1 )"));
 		ifList62.addElement(new String("( 1 , 2 ) is clear"));
+		ifList62.addElement(new String("?x at ( 1 , 1 )"));
 		// / ADD-LIST
 		Vector addList62 = new Vector();
-		addList62.addElement(new String("?x at ( 1 , 2 )"));
 		addList62.addElement(new String("( 1 , 1 ) is clear"));
+		addList62.addElement(new String("?x at ( 1 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList62 = new Vector();
 		deleteList62.addElement(new String("?x at ( 1 , 1 )"));
@@ -386,12 +388,12 @@ public class Ope {
 		String name63 = new String("move 5-6");
 		// / IF
 		Vector ifList63 = new Vector();
-		ifList63.addElement(new String("?x at ( 1 , 1 )"));
 		ifList63.addElement(new String("( 2 , 1 ) is clear"));
+		ifList63.addElement(new String("?x at ( 1 , 1 )"));
 		// / ADD-LIST
 		Vector addList63 = new Vector();
-		addList63.addElement(new String("?x at ( 2 , 1 )"));
 		addList63.addElement(new String("( 1 , 1 ) is clear"));
+		addList63.addElement(new String("?x at ( 2 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList63 = new Vector();
 		deleteList63.addElement(new String("?x at ( 1 , 1 )"));
@@ -404,12 +406,12 @@ public class Ope {
 		String name64 = new String("move 5-2");
 		// / IF
 		Vector ifList64 = new Vector();
-		ifList64.addElement(new String("?x at ( 1 , 1 )"));
 		ifList64.addElement(new String("( 1 , 0 ) is clear"));
+		ifList64.addElement(new String("?x at ( 1 , 1 )"));
 		// / ADD-LIST
 		Vector addList64 = new Vector();
-		addList64.addElement(new String("?x at ( 1 , 0 )"));
 		addList64.addElement(new String("( 1 , 1 ) is clear"));
+		addList64.addElement(new String("?x at ( 1 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList64 = new Vector();
 		deleteList64.addElement(new String("?x at ( 1 , 1 )"));
@@ -422,12 +424,12 @@ public class Ope {
 		String name65 = new String("move 6-3");
 		// / IF
 		Vector ifList65 = new Vector();
-		ifList65.addElement(new String("?x at ( 2 , 1 )"));
 		ifList65.addElement(new String("( 2 , 0 ) is clear"));
+		ifList65.addElement(new String("?x at ( 2 , 1 )"));
 		// / ADD-LIST
 		Vector addList65 = new Vector();
-		addList65.addElement(new String("?x at ( 2 , 0 )"));
 		addList65.addElement(new String("( 2 , 1 ) is clear"));
+		addList65.addElement(new String("?x at ( 2 , 0 )"));
 		// / DELETE-LIST
 		Vector deleteList65 = new Vector();
 		deleteList65.addElement(new String("?x at ( 2 , 1 )"));
@@ -440,12 +442,12 @@ public class Ope {
 		String name66 = new String("move 6-5");
 		// / IF
 		Vector ifList66 = new Vector();
-		ifList66.addElement(new String("?x at ( 2 , 1 )"));
 		ifList66.addElement(new String("( 1 , 1 ) is clear"));
+		ifList66.addElement(new String("?x at ( 2 , 1 )"));
 		// / ADD-LIST
 		Vector addList66 = new Vector();
-		addList66.addElement(new String("?x at ( 1 , 1 )"));
 		addList66.addElement(new String("( 2 , 1 ) is clear"));
+		addList66.addElement(new String("?x at ( 1 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList66 = new Vector();
 		deleteList66.addElement(new String("?x at ( 2 , 1 )"));
@@ -458,12 +460,12 @@ public class Ope {
 		String name67 = new String("move 6-9");
 		// / IF
 		Vector ifList67 = new Vector();
-		ifList67.addElement(new String("?x at ( 2 , 1 )"));
 		ifList67.addElement(new String("( 2 , 2 ) is clear"));
+		ifList67.addElement(new String("?x at ( 2 , 1 )"));
 		// / ADD-LIST
 		Vector addList67 = new Vector();
-		addList67.addElement(new String("?x at ( 2 , 2 )"));
 		addList67.addElement(new String("( 2 , 1 ) is clear"));
+		addList67.addElement(new String("?x at ( 2 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList67 = new Vector();
 		deleteList67.addElement(new String("?x at ( 2 , 1 )"));
@@ -476,12 +478,12 @@ public class Ope {
 		String name68 = new String("move 7-4");
 		// / IF
 		Vector ifList68 = new Vector();
-		ifList68.addElement(new String("?x at ( 0 , 2 )"));
 		ifList68.addElement(new String("( 0 , 1 ) is clear"));
+		ifList68.addElement(new String("?x at ( 0 , 2 )"));
 		// / ADD-LIST
 		Vector addList68 = new Vector();
-		addList68.addElement(new String("?x at ( 0 , 1 )"));
 		addList68.addElement(new String("( 0 , 2 ) is clear"));
+		addList68.addElement(new String("?x at ( 0 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList68 = new Vector();
 		deleteList68.addElement(new String("?x at ( 0 , 2 )"));
@@ -494,12 +496,12 @@ public class Ope {
 		String name69 = new String("move 7-8");
 		// / IF
 		Vector ifList69 = new Vector();
-		ifList69.addElement(new String("?x at ( 0 , 2 )"));
 		ifList69.addElement(new String("( 1 , 2 ) is clear"));
+		ifList69.addElement(new String("?x at ( 0 , 2 )"));
 		// / ADD-LIST
 		Vector addList69 = new Vector();
-		addList69.addElement(new String("?x at ( 1 , 2 )"));
 		addList69.addElement(new String("( 0 , 2 ) is clear"));
+		addList69.addElement(new String("?x at ( 1 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList69 = new Vector();
 		deleteList69.addElement(new String("?x at ( 0 , 2 )"));
@@ -512,12 +514,12 @@ public class Ope {
 		String name70 = new String("move 8-7");
 		// / IF
 		Vector ifList70 = new Vector();
-		ifList70.addElement(new String("?x at ( 1 , 2 )"));
 		ifList70.addElement(new String("( 0 , 2 ) is clear"));
+		ifList70.addElement(new String("?x at ( 1 , 2 )"));
 		// / ADD-LIST
 		Vector addList70 = new Vector();
-		addList70.addElement(new String("?x at ( 0 , 2 )"));
 		addList70.addElement(new String("( 1 , 2 ) is clear"));
+		addList70.addElement(new String("?x at ( 0 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList70 = new Vector();
 		deleteList70.addElement(new String("?x at ( 1 , 2 )"));
@@ -530,12 +532,12 @@ public class Ope {
 		String name71 = new String("move 8-5");
 		// / IF
 		Vector ifList71 = new Vector();
-		ifList71.addElement(new String("?x at ( 1 , 2 )"));
 		ifList71.addElement(new String("( 1 , 1 ) is clear"));
+		ifList71.addElement(new String("?x at ( 1 , 2 )"));
 		// / ADD-LIST
 		Vector addList71 = new Vector();
-		addList71.addElement(new String("?x at ( 1 , 1 )"));
 		addList71.addElement(new String("( 1 , 2 ) is clear"));
+		addList71.addElement(new String("?x at ( 1 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList71 = new Vector();
 		deleteList71.addElement(new String("?x at ( 1 , 2 )"));
@@ -548,12 +550,12 @@ public class Ope {
 		String name72 = new String("move 8-9");
 		// / IF
 		Vector ifList72 = new Vector();
-		ifList72.addElement(new String("?x at ( 1 , 2 )"));
 		ifList72.addElement(new String("( 2 , 2 ) is clear"));
+		ifList72.addElement(new String("?x at ( 1 , 2 )"));
 		// / ADD-LIST
 		Vector addList72 = new Vector();
-		addList72.addElement(new String("?x at ( 2 , 2 )"));
 		addList72.addElement(new String("( 1 , 2 ) is clear"));
+		addList72.addElement(new String("?x at ( 2 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList72 = new Vector();
 		deleteList72.addElement(new String("?x at ( 1 , 2 )"));
@@ -566,12 +568,12 @@ public class Ope {
 		String name73 = new String("move 9-6");
 		// / IF
 		Vector ifList73 = new Vector();
-		ifList73.addElement(new String("?x at ( 2 , 2 )"));
 		ifList73.addElement(new String("( 2 , 1 ) is clear"));
+		ifList73.addElement(new String("?x at ( 2 , 2 )"));
 		// / ADD-LIST
 		Vector addList73 = new Vector();
-		addList73.addElement(new String("?x at ( 2 , 1 )"));
 		addList73.addElement(new String("( 2 , 2 ) is clear"));
+		addList73.addElement(new String("?x at ( 2 , 1 )"));
 		// / DELETE-LIST
 		Vector deleteList73 = new Vector();
 		deleteList73.addElement(new String("?x at ( 2 , 2 )"));
@@ -584,12 +586,12 @@ public class Ope {
 		String name74 = new String("move 9-8");
 		// / IF
 		Vector ifList74 = new Vector();
-		ifList74.addElement(new String("?x at ( 2 , 2 )"));
 		ifList74.addElement(new String("( 1 , 2 ) is clear"));
+		ifList74.addElement(new String("?x at ( 2 , 2 )"));
 		// / ADD-LIST
 		Vector addList74 = new Vector();
-		addList74.addElement(new String("?x at ( 1 , 2 )"));
 		addList74.addElement(new String("( 2 , 2 ) is clear"));
+		addList74.addElement(new String("?x at ( 1 , 2 )"));
 		// / DELETE-LIST
 		Vector deleteList74 = new Vector();
 		deleteList74.addElement(new String("?x at ( 2 , 2 )"));
@@ -611,7 +613,7 @@ public class Ope {
 		return goalList;
 	}
 
-	private Vector initInitialState() {
+	private Vector initInitialState(Vector objects) {
 		Vector initialState = new Vector();
 		initialState.addElement("Start");
 
@@ -624,6 +626,19 @@ public class Ope {
 		initialState.addElement("7 at ( 1 , 2 )");//(0,2)
 		initialState.addElement("8 at ( 2 , 2 )");//(1,2)
 		initialState.addElement("( 0 , 0 ) is clear");//(2,2)
+		
+		//   1 2
+		// 5 4 3
+		// 6 7 8
+		
+		for(int i = 0; i < initialState.size(); ++i){
+			String state = (String)initialState.get(i);
+			StringTokenizer tokens = new StringTokenizer(state);
+			String object = tokens.nextToken();
+			if(tokens.hasMoreElements() && tokens.nextElement().equals("at")){
+				objects.add(object);
+			}
+		}
 
 		/*
 		initialState.addElement("1 at ( 0 , 0 )");//(0,0)
