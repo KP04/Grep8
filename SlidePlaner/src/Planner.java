@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Planner {
 	Vector operators;
@@ -41,6 +43,8 @@ public class Planner {
 					objects, 0, flag) != -1) {
 				return true;
 			} else {
+				Vector vec = new Vector();vec.addElement(aGoal);
+//				return planning(vec, theCurrentState, theBinding, objects, flag);
 				return false;
 			}
 		} else {
@@ -90,10 +94,6 @@ public class Planner {
 								i--;
 							}
 						}
-						// 現在のオペレータの状態の表示
-						for (int i = 0; i < operators.size(); i++)
-							System.out.println(((Operator) operators
-									.elementAt(i)).name + "a");
 					} else if (str.equals("make first line")) {
 						objects.remove("2");
 						objects.remove("3");
@@ -124,10 +124,6 @@ public class Planner {
 								i--;
 							}
 						}
-						// 現在のオペレータの状態の表示
-						for (int i = 0; i < operators.size(); i++)
-							System.out.println(((Operator) operators
-									.elementAt(i)).name + "b");
 					} else if (str.equals("make first column")) {
 						objects.remove("4");
 						objects.remove("7");
@@ -158,10 +154,6 @@ public class Planner {
 								i--;
 							}
 						}
-						// 現在のオペレータの状態の表示
-						for (int i = 0; i < operators.size(); i++)
-							System.out.println(((Operator) operators
-									.elementAt(i)).name + "c");
 					} else if (str.equals("make second line")) {
 						objects.remove("5");
 						objects.remove("6");
@@ -192,10 +184,6 @@ public class Planner {
 								i--;
 							}
 						}
-						// 現在のオペレータの状態の表示
-						for (int i = 0; i < operators.size(); i++)
-							System.out.println(((Operator) operators
-									.elementAt(i)).name + "d");
 					}
 					System.out.println(theCurrentState);
 					if (planning(theGoalList, theCurrentState, theBinding,
@@ -297,11 +285,20 @@ public class Planner {
 			int a = 0;
 			// for (int j = 0, addIndex = 0; j < addList.size(); j++) {
 			if (addList.size() == 2
-					&& ((String) addList.get(0)).indexOf("clear") != -1 && flag)
+					&& ((String) addList.get(0)).indexOf("clear") != -1 && flag && theGoal.indexOf("clear") == -1)
 				a = 1;
 			if (addList.size() != 0
 					&& (new Unifier()).unify(theGoal,
 							(String) addList.elementAt(a), theBinding)) {
+			if (addList.size() == 3) {
+					String add = (String) addList.get(0);
+					/*
+					 * if (theGoalList.contains(add)) { add = (String)
+					 * addList.get(1); if (theGoalList.contains(add)) { add =
+					 * (String) addList.get(2); if (theGoalList.contains(add))
+					 * return i+1; } }
+					 */return i + 1;
+				}
 				if (addList.size() == 2) {
 					String add = (String) addList.get(1);
 					StringTokenizer tokens = new StringTokenizer(add);
@@ -431,7 +428,7 @@ public class Planner {
 		for (int k = 0; k < operators.size(); k++) {
 			Operator ope = (Operator) operators.elementAt(k);
 			if (ope.name.equals(str)) {
-				operators.removeElementAt(i);
+				operators.removeElementAt(k);
 				operators.addElement(ope);
 				break;
 			}
@@ -452,7 +449,9 @@ public class Planner {
 	}
 
 	private String pair(String s) {
-		if (s.length() > 6) {
+		Pattern pat = Pattern.compile("move *");
+		Matcher mat = pat.matcher(s);
+		if (mat.find()) { // もしパターンにマッチすれば
 			char[] c = s.toCharArray();
 			char temp = c[5];
 
